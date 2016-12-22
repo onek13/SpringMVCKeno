@@ -1,11 +1,14 @@
 package com.training.customer.controller;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,23 +35,32 @@ public class CustomerController {
 	public Customer getCustomerById(@PathVariable int id) {
 		return customerService.getCustomerById(id);
 	}
-
+	
+	@RequestMapping(value = "/prepareCreateCustomer", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String prepareCreateCustomer(Model model) {
+		model.addAttribute("customer", new Customer());
+		return "customer/customer_details";
+	}
+	
 	@RequestMapping(value = "/createCustomer", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String createCustomer(@ModelAttribute("customer") Customer customer) {
-		if (customer.getId() == 0) {
+	public String createCustomer(@Valid Customer customer, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "customer/customer_details";
+		} else if (customer.getId() == 0) {
+			customer.setLastUpdateDate(new Date());
 			customerService.createCustomer(customer);
 		} else {
+			customer.setLastUpdateDate(new Date());
 			customerService.updateCustomer(customer);
 		}
 
 		return "redirect:/getCustomerList";
 	}
-
-	@RequestMapping(value = "/updateCustomer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String updateCustomer(@PathVariable("id") int id, Model model) {
+	
+	@RequestMapping(value = "/prepareUpdateCustomer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String prepareUpdateCustomer(@PathVariable("id") int id, Model model) {
 		model.addAttribute("customer", this.customerService.getCustomerById(id));
-		model.addAttribute("customerList", this.customerService.getCustomerList());
-		return "customer/list_customer";
+		return "customer/customer_details";
 	}
 
 	@RequestMapping(value = "/deleteCustomer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")

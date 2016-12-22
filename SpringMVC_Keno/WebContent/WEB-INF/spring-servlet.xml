@@ -54,5 +54,11 @@
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+
+		<beans:property name="basename" value="/WEB-INF/messages" />
+
+	</beans:bean>
 
 </beans:beans>

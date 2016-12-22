@@ -35,30 +35,15 @@ td, th {
 	padding: 5px 10px;
 }
 </style>
+<script>
+function addNewCustomer() {
+    window.location = "/SpringMVC_Keno/prepareCreateCustomer";
+}
+</script>
 </head>
 <body>
-	<form:form method="post" modelAttribute="customer"
-		action="/SpringMVC_Keno/createCustomer.do">
-		<table>
-			<tr>
-				<th colspan="2">Add Country</th>
-			</tr>
-			<tr>
-				<form:hidden path="id" />
-				<td><form:label path="firstName">First Name:</form:label></td>
-				<td><form:input path="firstName" size="30" maxlength="30"></form:input></td>
-			</tr>
-			<tr>
-				<td><form:label path="lastName">Last Name:</form:label></td>
-				<td><form:input path="lastName" size="30" maxlength="30"></form:input></td>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="submit" class="blue-button" /></td>
-			</tr>
-		</table>
-	</form:form>
-	</br>
 	<h3>Customer List</h3>
+	<input type="button" class="blue-button" value="Add New" onclick="javascript:addNewCustomer();"/>
 	<c:if test="${!empty customerList}">
 		<table class="tg">
 			<tr>
@@ -73,7 +58,7 @@ td, th {
 					<td>${customer.id}</td>
 					<td>${customer.firstName}</td>
 					<td>${customer.lastName}</td>
-					<td><a href="/SpringMVC_Keno/updateCustomer/${customer.id}">Edit</a></td>
+					<td><a href="<c:url value='/prepareUpdateCustomer/${customer.id}' />">Edit</a></td>
 					<td><a href="<c:url value='/deleteCustomer/${customer.id}' />">Delete</a></td>
 				</tr>
 			</c:forEach>

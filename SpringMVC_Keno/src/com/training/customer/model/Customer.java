@@ -11,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author Keno San Pedro
@@ -29,36 +32,39 @@ public class Customer {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id;
 	
-	@Column(name="creation_date")
-	Date creationDate;
-	
 	@Column(name="last_update_date")
 	Date lastUpdateDate;
 	
 	@Column(name="first_name")
+	@NotBlank
+	@Size(min=2, max=100)
 	String firstName;
 	
 	@Column(name="last_name")
+	@NotBlank
+	@Size(min=2, max=100)
 	String lastName;
 	
 	@Column(name="id_type")
+	@Size(max=45)
 	String idType;
 	
 	@Column(name="id_number")
+	@Size(max=45)
 	String idNumber;
 	
 	@Column(name="contact_number")
+	@Size(max=45)
 	String contactNumber;
 
 	public Customer() {
 		super();
 	}
 
-	public Customer(int id, Date creationDate, Date lastUpdateDate, String firstName, String lastName, String idType,
+	public Customer(int id, Date lastUpdateDate, String firstName, String lastName, String idType,
 			String idNumber, String contactNumber) {
 		super();
 		this.id = id;
-		this.creationDate = creationDate;
 		this.lastUpdateDate = lastUpdateDate;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -73,14 +79,6 @@ public class Customer {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
 	}
 
 	public Date getLastUpdateDate() {
@@ -130,6 +128,5 @@ public class Customer {
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
-	
 
 }

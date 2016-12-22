@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.training.customer.dao.CustomerDAO;
+import com.training.customer.jdbc.ICustomerJDBC;
 import com.training.customer.model.Customer;
 
 @Service("customerService")
@@ -14,10 +15,13 @@ public class CustomerService {
 	
 	@Autowired
 	CustomerDAO customerDAO;
+	
+	@Autowired
+	ICustomerJDBC customerJDBC;
 		
 	@Transactional
 	public List<Customer> getCustomerList() {
-		return customerDAO.getCustomerList();
+		return customerJDBC.getCustomerList();
 	}
 
 	@Transactional
