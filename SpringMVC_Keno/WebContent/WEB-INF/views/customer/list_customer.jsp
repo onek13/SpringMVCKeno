@@ -40,7 +40,7 @@ td, th {
 	<h3>Customer List</h3>
 	<input type="button" class="blue-button" 
 						 value="Add New" 
-						 onclick="window.location.href='${pageContext.request.contextPath}/prepareCreateCustomer'"/>
+						 onclick="window.location.href='<c:url value='/prepareCreateCustomer' />'"/>
 	<c:if test="${!empty customerList}">
 		<table class="tg">
 			<tr>

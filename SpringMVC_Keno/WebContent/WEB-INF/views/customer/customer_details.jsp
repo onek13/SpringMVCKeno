@@ -38,7 +38,7 @@ td, th {
 </head>
 <body>
 	<form:form method="post" modelAttribute="customer"
-		action="/SpringMVC_Keno/createCustomer">
+		action="<c:url value='/SpringMVC_Keno/createCustomer' />">
 		<table>
 			<tr>
 				<th colspan="2">Customer Details</th>
@@ -72,7 +72,7 @@ td, th {
 			<tr>
 				<td colspan="2">
 					<input type="submit" class="blue-button" value="Save"/>
-					<input type="button" class="blue-button" value="Cancel" onclick="window.location.href='${pageContext.request.contextPath}/getCustomerList'"/>
+					<input type="button" class="blue-button" value="Cancel" onclick="window.location.href='<c:url value='/getCustomerList' />'"/>
 					
 				</td>
 			</tr>
