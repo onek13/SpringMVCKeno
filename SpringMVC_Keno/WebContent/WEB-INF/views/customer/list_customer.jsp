@@ -35,15 +35,12 @@ td, th {
 	padding: 5px 10px;
 }
 </style>
-<script>
-function addNewCustomer() {
-    window.location = "/SpringMVC_Keno/prepareCreateCustomer";
-}
-</script>
 </head>
 <body>
 	<h3>Customer List</h3>
-	<input type="button" class="blue-button" value="Add New" onclick="javascript:addNewCustomer();"/>
+	<input type="button" class="blue-button" 
+						 value="Add New" 
+						 onclick="window.location.href='${pageContext.request.contextPath}/prepareCreateCustomer'"/>
 	<c:if test="${!empty customerList}">
 		<table class="tg">
 			<tr>

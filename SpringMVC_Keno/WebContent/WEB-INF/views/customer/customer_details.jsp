@@ -35,11 +35,6 @@ td, th {
 	padding: 5px 10px;
 }
 </style>
-<script>
-function backToListing() {
-    window.location = "/SpringMVC_Keno/getCustomerList";
-}
-</script>
 </head>
 <body>
 	<form:form method="post" modelAttribute="customer"
@@ -77,7 +72,8 @@ function backToListing() {
 			<tr>
 				<td colspan="2">
 					<input type="submit" class="blue-button" value="Save"/>
-					<input type="button" class="blue-button" value="Cancel" onclick="javascript:backToListing();"/>
+					<input type="button" class="blue-button" value="Cancel" onclick="window.location.href='${pageContext.request.contextPath}/getCustomerList'"/>
+					
 				</td>
 			</tr>
 			
