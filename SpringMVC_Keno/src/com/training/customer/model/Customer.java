@@ -25,11 +25,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * This is our model class and it corresponds to Country table in database
  */
 @Entity
-@Table(name="tbl_customer", 
-uniqueConstraints=
-    @UniqueConstraint(
-        name="id_number", 
-        columnNames={"id_type", "id_number"} ) )
+@Table(name="tbl_customer")
 public class Customer {
 	
 	@Id
