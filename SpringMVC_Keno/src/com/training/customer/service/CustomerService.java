@@ -44,4 +44,9 @@ public class CustomerService {
 	public void deleteCustomer(int id) {
 		customerDAO.deleteCustomer(id);
 	}
+	
+	@Transactional
+	public boolean isDuplicateRecord(String columnName, String value, Integer id) {
+		return customerJDBC.isDuplicateRecord(columnName, value, id);
+	}
 }

@@ -12,5 +12,9 @@ import com.training.customer.model.Customer;
  *
  */
 public interface ICustomerJDBC {
+	
+	public boolean isDuplicateRecord(String columnName, String value, Integer id);
+	
 	public List<Customer> getCustomerList();
+	
 }

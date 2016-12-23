@@ -5,6 +5,7 @@ package com.training.customer.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.object.MappingSqlQuery;
+import org.springframework.jdbc.object.SqlFunction;
 import org.springframework.stereotype.Repository;
 
 import com.training.customer.model.Customer;
@@ -31,7 +33,38 @@ public class CustomerJDBC extends JdbcDaoSupport implements ICustomerJDBC {
 		setDataSource(dataSource);
 	}
 	
+	public boolean isDuplicateRecord(String columnName, String value, Integer id) {
+		List<Object> countInputParams = new ArrayList<Object>();
+		List<Integer> countInputTypes = new ArrayList<Integer>();
+		
+		String sqlQuery = "select count(*) from tbl_customer where " + columnName + " = ? "; 
+		
+		if (id != null && id.intValue() > 0) {
+			sqlQuery += " and id != ? ";
+			countInputTypes.add(new Integer(Types.BIGINT));
+			countInputParams.add(id);
+		}
+		
+		countInputTypes.add(new Integer(Types.VARCHAR));
+		countInputParams.add(value);
+
+		int[] paraTypes = new int[countInputTypes.size()];
+
+		for (int idx = 0; idx < countInputTypes.size(); idx++)
+			paraTypes[idx] = ((Integer) countInputTypes.get(idx)).intValue();
+
+		SqlFunction fn = new SqlFunction(getDataSource(), sqlQuery, paraTypes);
+		fn.compile();
+
+		int totalRowCount = fn.run(countInputParams.toArray());
+
+		return totalRowCount > 0 ? true : false;
+	}
 	
+	/**
+	 * 
+	 * Get All Customer List
+	 */
 	public List<Customer> getCustomerList()
 	{
 		String sqlQueary = "select * from tbl_customer";

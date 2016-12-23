@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -24,7 +25,11 @@ import org.hibernate.validator.constraints.NotBlank;
  * This is our model class and it corresponds to Country table in database
  */
 @Entity
-@Table(name="tbl_customer")
+@Table(name="tbl_customer", 
+uniqueConstraints=
+    @UniqueConstraint(
+        name="id_number", 
+        columnNames={"id_type", "id_number"} ) )
 public class Customer {
 	
 	@Id

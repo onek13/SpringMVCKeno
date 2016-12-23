@@ -47,14 +47,19 @@ public class CustomerController {
 		if (bindingResult.hasErrors()) {
 			return "customer/customer_details";
 		} else if (customer.getId() == 0) {
-			customer.setLastUpdateDate(new Date());
-			customerService.createCustomer(customer);
+			if (customerService.isDuplicateRecord("id_number", customer.getIdNumber(), null)) {
+				model.addAttribute("duplicateIdNumberError", "Duplicate ID number");
+				return "customer/customer_details";
+			} else {
+				customer.setLastUpdateDate(new Date());
+				customerService.createCustomer(customer);	
+			}			
 		} else {
 			customer.setLastUpdateDate(new Date());
 			customerService.updateCustomer(customer);
 		}
 
-		return "redirect:/getCustomerList";
+		return "customer/confirmation_message";
 	}
 	
 	@RequestMapping(value = "/prepareUpdateCustomer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
