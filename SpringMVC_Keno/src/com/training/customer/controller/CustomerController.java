@@ -23,7 +23,7 @@ public class CustomerController {
 	CustomerService customerService;
 
 	@RequestMapping(value = "/getCustomerList", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getCountries(Model model) {
+	public String getCustomerList(Model model) {
 
 		List<Customer> customerList = customerService.getCustomerList();
 		model.addAttribute("customer", new Customer());
